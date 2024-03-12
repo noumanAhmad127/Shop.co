@@ -15,8 +15,6 @@ const Carts = () => {
   const { cartItems } = cart;
   console.log(cartItems);
 
-  
-
   useEffect(() => {
     if (id) {
       dispatch(addToCart(id, qty));
@@ -31,7 +29,7 @@ const Carts = () => {
   //   navigate(`/cart/${id}?qty=${qty}`)
   // }
   const checkoutHandler = () => {
-    navigate('/login?redirect=shipping')
+    navigate("/login?redirect=shipping");
   };
 
   const deliveryPrice = 15;
@@ -117,10 +115,7 @@ const Carts = () => {
             <div className="flex flex-col gap-4">
               <div className="flex flex-row justify-between">
                 <p className="text-black/[60%] text-[16px]">SubTotal</p>
-                <p className="text-[16px] font-bold">
-                  $
-                  {cartItemPrice}
-                </p>
+                <p className="text-[16px] font-bold">${cartItemPrice}</p>
               </div>
               <div className="flex flex-row justify-between">
                 <p className="text-black/[60%] text-[16px]">Delivery Fee</p>
@@ -132,7 +127,10 @@ const Carts = () => {
                 <p className="text-[16px] font-bold">${totalPrice}</p>
               </div>
             </div>
-            <button className="text-white bg-black py-4 rounded-full w-full" onClick={checkoutHandler}> 
+            <button
+              className="text-white bg-black py-4 rounded-full w-full"
+              onClick={checkoutHandler}
+            >
               Go To Checkout{" "}
               <span>
                 <i

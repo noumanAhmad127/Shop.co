@@ -1,53 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { saveShippingAddress } from "../../redux/action/cartAction";
 
 const Shipping = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [consfirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState(null);
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress } = cart;
 
-  const location = useLocation();
+  const initialAddress = shippingAddress?.address ?? "";
+  const initialCity = shippingAddress?.city ?? "";
+  const initialPostalCode = shippingAddress?.postalCode ?? "";
+  const initialCountry = shippingAddress?.country ?? "";
+
+  const [address, setAddress] = useState(initialAddress);
+  const [city, setCity] = useState(initialCity);
+  const [postalCode, setPostalCode] = useState(initialPostalCode);
+  const [country, setCountry] = useState(initialCountry);
+
+  // const [address, setAddress] = useState(shippingAddress.address);
+  // const [city, setCity] = useState(shippingAddress.city);
+  // const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+  // const [country, setCountry] = useState(shippingAddress.country);
+
   const navigate = useNavigate();
-
-  const redirect = location.search ? location.search.split("=")[1] : "/";
-
   const dispatch = useDispatch();
-  const userSignOut = useSelector((state) => state.userSignOut);
-
-  const { loading, error, userInfo } = userSignOut;
-  // dispatch(login({ email, password }));
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [userInfo, redirect]);
 
   const sumbitHandler = (e) => {
     e.preventDefault();
-    if (password != consfirmPassword) {
-      setMessage("Password Doesn't Match");
-    }
-    dispatch(signOut(name, email, password));
+    dispatch(saveShippingAddress({ country, city, address, postalCode }));
+    navigate("/payment");
   };
   return (
     <div className="flex flex-col justify-center mx-6 my-6">
       <div className="hidden"></div>
       <div className="flex flex-col gap-10">
-        {error && (
-          <h1 className="text-center bg-red-300 text-red-600 text-sm py-4 w-full">
-            {error}
-          </h1>
-        )}
-        {message && (
-          <h1 className="text-center bg-red-300 text-red-600 text-sm py-4 w-full">
-            {message}
-          </h1>
-        )}
         <div className="flex flex-col gap-6">
-          <h1 className="text-3xl font-medium">SignOut to Exclusive</h1>
-          <p className="text-sm">Enter your details below</p>
+          <h1 className="text-3xl font-medium">Shipping</h1>
+          <p className="text-sm">Enter Your Shipping Detail</p>
         </div>
         <div className="flex flex-col gap-4">
           <form onSubmit={sumbitHandler} autoComplete="off">
@@ -55,9 +44,9 @@ const Shipping = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="Enter Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter Address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                   className="text-sm border-b-[1px] border-black/[60%] w-full px-1 py-3 autofill:none"
                   autoComplete="off"
                 />
@@ -65,53 +54,43 @@ const Shipping = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="Enter Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter City"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   className="text-sm border-b-[1px] border-black/[60%] w-full px-1 py-3 autofill:none"
                   autoComplete="off"
                 />
               </div>
               <div>
                 <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="text"
+                  placeholder="Enter Postal Code"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
                   className="text-sm border-b-[1px] border-black/[60%] w-full px-1 py-3"
                   autoComplete="off"
                 />
               </div>
               <div>
                 <input
-                  type="password"
-                  placeholder="Password"
-                  value={consfirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  type="text"
+                  placeholder="Enter Country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
                   className="text-sm border-b-[1px] border-black/[60%] w-full px-1 py-3"
                   autoComplete="off"
                 />
               </div>
-              <div className="my-">
+              <div className="my-3">
                 <button
-                  className="text-base text-white bg-black py-4 w-full rounded-full"
+                  className="text-base text-white bg-black py-4 px-6 rounded-full"
                   type="submit"
                 >
-                  SignOut
+                  Continue
                 </button>
               </div>
             </div>
           </form>
-          <div>
-            <h1 className="text-center text-xs text-black/[60%]">
-              Have an account?{" "}
-              <span className="hover:underline">
-                <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-                  SingIn
-                </Link>
-              </span>
-            </h1>
-          </div>
         </div>
       </div>
     </div>

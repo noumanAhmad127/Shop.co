@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../../redux/action/userAction";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { userInfo } = userLogin;
 
   const signOutHandler = () => {
     dispatch(logOut());
+    navigate("/");
   };
   return (
     <div>

@@ -11,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
+  console.log(redirect);
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -47,7 +48,7 @@ const Login = () => {
             <div className="flex flex-col gap-6">
               <div>
                 <input
-                  type="text"
+                  type="email"
                   placeholder="Enter Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
