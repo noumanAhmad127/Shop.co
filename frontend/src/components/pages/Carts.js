@@ -118,21 +118,19 @@ const Carts = () => {
         <div>
           <div className="flex flex-col gap-4 py-[16px] px-[14px] border-[1px] border-black rounded-[20px]">
             <div>
-              <h1 className="text-xl font-bold">Order Sammary</h1>
+              <h1 className="text-xl font-bold">
+                Subtotal (
+                {cartItems.reduce(
+                  (pervItem, currItem) => pervItem + currItem.qty,
+                  0
+                )}
+                ) Items
+              </h1>
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex flex-row justify-between">
                 <p className="text-black/[60%] text-[16px]">SubTotal</p>
                 <p className="text-[16px] font-bold">${cartItemPrice}</p>
-              </div>
-              <div className="flex flex-row justify-between">
-                <p className="text-black/[60%] text-[16px]">Delivery Fee</p>
-                <p className="text-[16px] font-bold">${deliveryPrice}</p>
-              </div>
-              <hr />
-              <div className="flex flex-row justify-between">
-                <p className="text-black/[60%] text-[16px]">Total</p>
-                <p className="text-[16px] font-bold">${totalPrice}</p>
               </div>
             </div>
             <button
