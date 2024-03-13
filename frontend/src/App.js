@@ -10,6 +10,8 @@ import Login from "./components/pages/Login";
 import SignUp from "./components/pages/SignUp";
 import Profile from "./components/pages/Profile";
 import Shipping from "./components/pages/Shipping";
+import Payment from "./components/pages/Payment";
+import PlaceOrder from "./components/pages/PlaceOrder";
 // import { Router } from "express";
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route path="/products/:id" Component={ProductDetailStatic} exact />
         <Route path="/cart/:id?" Component={Carts} exact />
         <Route path="/shipping" Component={Shipping} exact />
+        <Route path="/payment" Component={Payment} exact />
+        <Route path="/placeorder" Component={PlaceOrder} exact />
       </Routes>
       <Footer />
     </Router>

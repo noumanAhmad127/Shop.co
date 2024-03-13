@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { login } from "../../redux/action/userAction";
 
 const Login = () => {
@@ -9,9 +14,11 @@ const Login = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
-  console.log(redirect);
+  const redirect = `/${location.search ? location.search.split("=")[1] : " "}`;
+  console.log(location.search);
+  console.log(`Login redirect ${redirect}`);
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -21,7 +28,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect);
+      navigate(redirect, { replace: true });
     }
   }, [userInfo, redirect]);
 

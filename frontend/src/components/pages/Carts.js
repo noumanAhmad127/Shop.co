@@ -10,10 +10,17 @@ const Carts = () => {
   console.log(id);
   const location = useLocation();
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+  console.log(`Cart Redirect ${redirect}`);
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+
+  const userLogin = useSelector((state) => state.userLogin);
+
+  const { userInfo } = userLogin;
   console.log(cartItems);
+  console.log(typeof cartItems);
 
   useEffect(() => {
     if (id) {
@@ -25,11 +32,12 @@ const Carts = () => {
     dispatch(removeFromCart(productId));
   };
 
-  // const checkoutHandler = () =>{
-  //   navigate(`/cart/${id}?qty=${qty}`)
-  // }
   const checkoutHandler = () => {
-    navigate("/login?redirect=shipping");
+    if (userInfo) {
+      navigate("/shipping");
+    } else {
+      navigate("/login?redirect=shipping");
+    }
   };
 
   const deliveryPrice = 15;
@@ -130,6 +138,7 @@ const Carts = () => {
             <button
               className="text-white bg-black py-4 rounded-full w-full"
               onClick={checkoutHandler}
+              disabled={cartItems.length === 0}
             >
               Go To Checkout{" "}
               <span>
