@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getOrderDetails } from "../../redux/action/orderAction";
 import { ColorRing } from "react-loader-spinner";
 import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
 const Order = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,11 @@ const Order = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, order, error } = orderDetails;
   useEffect(() => {
+    const addStripeScript = async () => {
+      const { data: clientId } = await axios.get("/api/config/stripe");
+      console.log(clientId);
+      addStripeScript();
+    };
     if (!order || order._id !== id) {
       dispatch(getOrderDetails(id));
     }
