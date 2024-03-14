@@ -12,7 +12,7 @@ const PlaceOrder = () => {
     .reduce((acc, item) => acc + item.qty * item.price, 0)
     .toFixed(2);
 
-  const totalPrice = (parseFloat(cartItemPrice) + deliveryPrice).toFixed(2);
+  const totalPrice = (parseFloat(cartItemPrice) + shippingPrice).toFixed(2);
   return (
     <>
       <div className="my-6">
