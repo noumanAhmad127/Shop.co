@@ -14,6 +14,7 @@ app.use(express.json());
 app.use("/api/products", productRoutes);
 app.use("/api/users", UserRoutes);
 app.use("/api/orders", OrderRoutes);
+app.use("/api/config/stripe", (req, res) => process.env.STRIPE_PUBLISHED_KEY);
 const PORT = process.env.PORT;
 
 app.listen(PORT, console.log(`server is running on port ${PORT}`));
