@@ -1,18 +1,47 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import CheckOutSteps from "../utils/CheckOutSteps";
+import { createOrder } from "../../redux/action/orderAction";
 
 const PlaceOrder = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress, paymentMethod, cartItems } = cart;
 
-  const shippingPrice = 15;
-  const cartItemPrice = cartItems
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { loading, success, error, order } = orderCreate;
+
+  // const shippingPrice = 15;
+  cart.itemsPrice = cart.cartItems
     .reduce((acc, item) => acc + item.qty * item.price, 0)
     .toFixed(2);
 
-  const totalPrice = (parseFloat(cartItemPrice) + shippingPrice).toFixed(2);
+  cart.shippingPrice = cart.itemsPrice > 1000 ? 0 : 15;
+
+  cart.totalPrice = (
+    Number(cart.itemsPrice) + Number(cart.shippingPrice)
+  ).toFixed(2);
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+    //eslint-disable-next-line
+  }, [success]);
+
+  const placeOrderHandler = () => {
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
   return (
     <>
       <div className="my-6">
@@ -27,8 +56,9 @@ const PlaceOrder = () => {
               </div>
               <div>
                 <p className="text-sm text-slate-600 leading-5">
-                  Address: {shippingAddress.address}, {shippingAddress.city},{" "}
-                  {shippingAddress.postalCode}, {shippingAddress.country}
+                  Address: {cart.shippingAddress.address},{" "}
+                  {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
+                  , {cart.shippingAddress.country}
                 </p>
               </div>
             </div>
@@ -39,7 +69,7 @@ const PlaceOrder = () => {
               </div>
               <div>
                 <p className="text-sm text-slate-600 leading-5">
-                  Payment Method: {paymentMethod}
+                  Payment Method: {cart.paymentMethod}
                 </p>
               </div>
             </div>
@@ -49,7 +79,7 @@ const PlaceOrder = () => {
                 <h1 className="text-lg font-semibold">Ordered Items</h1>
               </div>
               <div>
-                {cartItems.map((item, index) => (
+                {cart.cartItems.map((item, index) => (
                   <div
                     className="flex flex-row px-3 py-3 gap-3 items-center"
                     key={index}
@@ -88,27 +118,30 @@ const PlaceOrder = () => {
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-row justify-between">
                     <p className="text-black/[60%] text-[16px]">SubTotal</p>
-                    <p className="text-[16px] font-bold">${cartItemPrice}</p>
+                    <p className="text-[16px] font-bold">${cart.itemsPrice}</p>
                   </div>
                   <div className="flex flex-row justify-between">
                     <p className="text-black/[60%] text-[16px]">Delivery Fee</p>
-                    <p className="text-[16px] font-bold">${shippingPrice}</p>
+                    <p className="text-[16px] font-bold">
+                      ${cart.shippingPrice}
+                    </p>
                   </div>
                   <hr />
                   <div className="flex flex-row justify-between">
                     <p className="text-black/[60%] text-[16px]">Total</p>
-                    <p className="text-[16px] font-bold">${totalPrice}</p>
+                    <p className="text-[16px] font-bold">${cart.totalPrice}</p>
                   </div>
                 </div>
+                <div>{error && <h1>{error}</h1>}</div>
                 <button
                   className="text-white bg-black py-4 rounded-full w-full"
-                  // onClick={checkoutHandler}
-                  disabled={cartItems.length === 0}
+                  onClick={placeOrderHandler}
+                  disabled={cart.cartItems.length === 0}
                 >
                   Place Order{" "}
                   <span>
                     <i
-                      class="fa-solid fa-arrow-right-long"
+                      className="fa-solid fa-arrow-right-long"
                       style={{ color: "white" }}
                     ></i>
                   </span>

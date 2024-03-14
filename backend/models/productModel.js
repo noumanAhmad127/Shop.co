@@ -59,22 +59,6 @@ const productSchema = mongoose.Schema({
     required: true,
     default: 0,
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
 });
 
 const Product = mongoose.model("Product", productSchema);

@@ -14,7 +14,7 @@ const orderSchema = mongoose.Schema(
         image: { type: String, required: true },
         qty: { type: Number, required: true, default: 0 },
         price: { type: String, required: true, default: 0 },
-        product: {
+        productId: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: "Product",
@@ -40,7 +40,7 @@ const orderSchema = mongoose.Schema(
     shippingPrice: {
       type: Number,
       require: true,
-      default: 0.0,
+      default: 15.0,
     },
     totalPrice: {
       type: Number,

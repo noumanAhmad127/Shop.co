@@ -29,6 +29,7 @@ function App() {
         <Route path="/shipping" Component={Shipping} exact />
         <Route path="/payment" Component={Payment} exact />
         <Route path="/placeorder" Component={PlaceOrder} exact />
+        {/* <Route path="/order:id" Component={PlaceOrder} exact /> */}
       </Routes>
       <Footer />
     </Router>
