@@ -7,7 +7,7 @@ const PlaceOrder = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress, paymentMethod, cartItems } = cart;
 
-  const deliveryPrice = 15;
+  const shippingPrice = 15;
   const cartItemPrice = cartItems
     .reduce((acc, item) => acc + item.qty * item.price, 0)
     .toFixed(2);
@@ -92,7 +92,7 @@ const PlaceOrder = () => {
                   </div>
                   <div className="flex flex-row justify-between">
                     <p className="text-black/[60%] text-[16px]">Delivery Fee</p>
-                    <p className="text-[16px] font-bold">${deliveryPrice}</p>
+                    <p className="text-[16px] font-bold">${shippingPrice}</p>
                   </div>
                   <hr />
                   <div className="flex flex-row justify-between">
