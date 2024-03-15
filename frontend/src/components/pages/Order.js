@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getOrderDetails } from "../../redux/action/orderAction";
 import { ColorRing } from "react-loader-spinner";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 
 const Order = () => {
@@ -13,18 +13,19 @@ const Order = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, order, error } = orderDetails;
   useEffect(() => {
-    const addStripeScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/stripe");
-      console.log(clientId);
-      addStripeScript();
-    };
+    // const addStripeScript = async () => {
+    //   const { data: clientId } = await axios.get("/api/config/stripe");
+    //   console.log(clientId);
+    //   addStripeScript();
+    // };
     if (!order || order._id !== id) {
       dispatch(getOrderDetails(id));
     }
   }, [order, id]);
 
   const payOrderHandler = async () => {
-    const stripe = await loadStripe(process.env.STRIPE_PUBLISHED_KEY);
+    // const stripe = await loadStripe(process.env.STRIPE_PUBLISHED_KEY);
+    order.isPaid = true;
   };
 
   return loading ? (
@@ -69,17 +70,15 @@ const Order = () => {
                   {order.shippingAddress.postalCode},{" "}
                   {order.shippingAddress.country}
                 </p>
-                <p>
-                  {order.isDelivered ? (
-                    <p className="bg-green-400 text-green-500 text-xs font-bold px-4 py-4 w-full">
-                      Delivered at:{order.deliveredAt}
-                    </p>
-                  ) : (
-                    <p className="bg-red-400 text-red-500 text-xs  font-bold px-4 py-4 w-full">
-                      Not Delivered
-                    </p>
-                  )}
-                </p>
+                {order.isDelivered ? (
+                  <p className="bg-green-400 text-green-500 text-xs font-bold px-4 py-4 w-full">
+                    Delivered at:{order.deliveredAt}
+                  </p>
+                ) : (
+                  <p className="bg-red-400 text-red-500 text-xs  font-bold px-4 py-4 w-full">
+                    Not Delivered
+                  </p>
+                )}
               </div>
             </div>
             <hr className="my-2" />
@@ -91,17 +90,15 @@ const Order = () => {
                 <p className="text-sm text-slate-600 leading-5">
                   Payment Method: {order.paymentMethod}
                 </p>
-                <p>
-                  {order.isPaid ? (
-                    <p className="bg-green-400 text-green-500 text-xs font-bold px-4 py-4 w-full">
-                      Paid on:{order.paidAt}
-                    </p>
-                  ) : (
-                    <p className="bg-red-400 text-red-500 text-xs  font-bold px-4 py-4 w-full">
-                      Not Paid
-                    </p>
-                  )}
-                </p>
+                {order.isPaid ? (
+                  <p className="bg-green-400 text-green-500 text-xs font-bold px-4 py-4 w-full">
+                    Paid on:{order.paidAt}
+                  </p>
+                ) : (
+                  <p className="bg-red-400 text-red-500 text-xs  font-bold px-4 py-4 w-full">
+                    Not Paid
+                  </p>
+                )}
               </div>
             </div>
             <hr className="my-2" />
