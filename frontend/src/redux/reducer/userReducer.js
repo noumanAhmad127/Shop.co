@@ -39,6 +39,8 @@ export const userDetailReducer = (state = { user: {} }, { type, payload }) => {
       return { loading: false, user: payload };
     case actionTypes.USER_DETAIL_FAIL:
       return { loading: false, error: payload };
+    case actionTypes.USER_DETAIL_RESET:
+      return { user: {} };
     default:
       return state;
   }
