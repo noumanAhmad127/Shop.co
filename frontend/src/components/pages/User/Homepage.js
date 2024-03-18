@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Header from "../utils/Header";
-import Mainboard from "../utils/Mainboard";
+import Header from "../../utils/Header";
+import Mainboard from "../../utils/Mainboard";
 import { Link, useNavigate } from "react-router-dom";
-import ProductCards from "../utils/Cards/ProductCards";
+import ProductCards from "../../utils/Cards/ProductCards";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductList, listProduct } from "../../redux/action/productAction";
+import { ProductList, listProduct } from "../../../redux/action/productAction";
 
 const Homepage = () => {
   const dispatch = useDispatch();

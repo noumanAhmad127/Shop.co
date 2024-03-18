@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   UpdateUserProfile,
   getUserDetail,
-} from "../../redux/action/userAction";
-import { listMyOrders } from "../../redux/action/orderAction";
+} from "../../../redux/action/userAction";
+import { listMyOrders } from "../../../redux/action/orderAction";
 import { ColorRing } from "react-loader-spinner";
 
 const Profile = () => {
@@ -15,7 +15,7 @@ const Profile = () => {
   const [consfirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
 
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userDetail);
@@ -41,11 +41,11 @@ const Profile = () => {
       setName(user.name);
       setEmail(user.email);
     }
-  }, [dispatch, userInfo, user]);
+  }, [dispatch, userInfo, user, navigate]);
 
   const sumbitHandler = (e) => {
     e.preventDefault();
-    if (password != consfirmPassword) {
+    if (password !== consfirmPassword) {
       setMessage("Password Doesn't Match");
     } else {
       dispatch(UpdateUserProfile({ id: user._id, name, email, password }));
@@ -54,6 +54,19 @@ const Profile = () => {
   return (
     <div className="flex flex-col justify-between mx-6 my-6 gap-5">
       <div className="flex flex-col gap-10">
+        {loading && (
+          <div className="items-center flex justify-center">
+            <ColorRing
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{}}
+              wrapperClass="color-ring-wrapper"
+              colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+            />
+          </div>
+        )}
         {error && (
           <h1 className="text-center bg-red-300 text-red-600 text-sm py-4 w-full">
             {error}

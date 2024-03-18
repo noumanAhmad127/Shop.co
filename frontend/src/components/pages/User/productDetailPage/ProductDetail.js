@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Rating from "../../utils/Rating";
+import Rating from "../../../utils/Rating";
 import { useDispatch, useSelector } from "react-redux";
-import { detailProduct } from "../../../redux/action/productAction";
+import { detailProduct } from "../../../../redux/action/productAction";
 import { ColorRing } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const ProductDetail = ({ id }) => {
   const productDetail = useSelector((state) => state.productDetail);
   const { loading, error, product } = productDetail;
   const [qty, setQty] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(detailProduct(id));
@@ -25,9 +25,9 @@ const ProductDetail = ({ id }) => {
     setQty(qty + 1);
   };
 
-  const addToCartHandler = () =>{
-    navigate(`/cart/${id}?qty=${qty}`)
-  }
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
 
   return (
     <div className="mx-4">
@@ -97,7 +97,13 @@ const ProductDetail = ({ id }) => {
                 </span>
               </div>
               <div className="w-full basis-9/12 py-3 bg-black rounded-full text-center">
-                  <button className="text-white text-base"  disabled={product.countInStock === 0} onClick={addToCartHandler}>Add to Cart</button>
+                <button
+                  className="text-white text-base"
+                  disabled={product.countInStock === 0}
+                  onClick={addToCartHandler}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           </div>

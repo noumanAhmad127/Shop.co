@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import CheckOutSteps from "../utils/CheckOutSteps";
+import CheckOutSteps from "../../utils/CheckOutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { savePaymentMethod } from "../../redux/action/cartAction";
+import { savePaymentMethod } from "../../../redux/action/cartAction";
 
 const Payment = () => {
   const cart = useSelector((state) => state.cart);

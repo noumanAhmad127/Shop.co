@@ -1,11 +1,11 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import ProductCards from "../../utils/Cards/ProductCards";
+import ProductCards from "../../../utils/Cards/ProductCards";
 import ProductDetail from "./ProductDetail";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const ProductDetailStatic = () => {
-    const { id } = useParams();
+  const { id } = useParams();
 
   const [products, setProducts] = useState([]);
 
@@ -20,7 +20,7 @@ const ProductDetailStatic = () => {
 
   return (
     <>
-      <ProductDetail id={id}/>
+      <ProductDetail id={id} />
       <div className="flex flex-col gap-14 mx-4">
         <div>
           <h1 className="text-2xl font-bold text-center">
@@ -32,9 +32,9 @@ const ProductDetailStatic = () => {
             .sort(() => 0.5 - Math.random())
             .slice(0, 2)
             .map((products) => (
-                <div key={products._id}>
-                  <ProductCards products={products} />
-                </div>
+              <div key={products._id}>
+                <ProductCards products={products} />
+              </div>
             ))}
         </div>
       </div>

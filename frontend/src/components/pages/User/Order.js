@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getOrderDetails } from "../../redux/action/orderAction";
+import { getOrderDetails } from "../../../redux/action/orderAction";
 import { ColorRing } from "react-loader-spinner";
 // import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";

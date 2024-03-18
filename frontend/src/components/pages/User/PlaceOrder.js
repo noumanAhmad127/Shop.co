@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import CheckOutSteps from "../utils/CheckOutSteps";
-import { createOrder } from "../../redux/action/orderAction";
+import CheckOutSteps from "../../utils/CheckOutSteps";
+import { createOrder } from "../../../redux/action/orderAction";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();

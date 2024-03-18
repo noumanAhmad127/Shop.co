@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "../../redux/action/userAction";
+import { ColorRing } from "react-loader-spinner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +10,7 @@ const Login = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
 
   const redirect = `/${location.search ? location.search.split("=")[1] : " "}`;
   console.log(location.search);
@@ -41,6 +37,19 @@ const Login = () => {
     <div className="flex flex-col justify-center mx-6 my-6">
       <div className="hidden"></div>
       <div className="flex flex-col gap-10">
+        {loading && (
+          <div className="items-center flex justify-center">
+            <ColorRing
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{}}
+              wrapperClass="color-ring-wrapper"
+              colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+            />
+          </div>
+        )}
         {error && (
           <h1 className="text-center bg-red-500 text-red-600 text-sm py-4 w-full">
             {error}

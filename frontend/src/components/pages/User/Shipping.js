@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { saveShippingAddress } from "../../redux/action/cartAction";
-import CheckOutSteps from "../utils/CheckOutSteps";
+import { saveShippingAddress } from "../../../redux/action/cartAction";
+import CheckOutSteps from "../../utils/CheckOutSteps";
 
 const Shipping = () => {
   const cart = useSelector((state) => state.cart);

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, listUsers } from "../../redux/action/userAction";
+import { deleteUser, listUsers } from "../../../redux/action/userAction";
 import { ColorRing } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -81,8 +81,7 @@ const UserList = () => {
                         {user.name}
                       </th>
                       <td className="px-6 py-4">
-                        <a href={`mailto:${user.email}`}></a>
-                        {user.email}
+                        <a href={`mailto:${user.email}`}>{user.email}</a>
                       </td>
                       {user.isAdmin ? (
                         <td className="px-6 py-4">

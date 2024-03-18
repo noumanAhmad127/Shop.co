@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserDetail, updateUser } from "../../redux/action/userAction";
-import { actionTypes } from "../../redux/action/action-types";
+import { getUserDetail, updateUser } from "../../../redux/action/userAction";
+import { actionTypes } from "../../../redux/action/action-types";
 import { ColorRing } from "react-loader-spinner";
 
 const UserEdit = () => {
@@ -48,7 +48,7 @@ const UserEdit = () => {
     <div className="flex flex-col justify-center mx-6 my-6">
       <div className="flex flex-col gap-10">
         <div>
-          {loading && (
+          {(loading || loadingUpdate) && (
             <div className="items-center flex justify-center">
               <ColorRing
                 visible={true}
@@ -61,12 +61,12 @@ const UserEdit = () => {
               />
             </div>
           )}
-          {error && (
+          {(error || errorLoading) && (
             <h1 className="text-center bg-red-300 text-red-600 text-sm py-4 w-full">
               {error}
             </h1>
           )}
-          {message && (
+          {message || (
             <h1 className="text-center bg-red-300 text-red-600 text-sm py-4 w-full">
               {message}
             </h1>
