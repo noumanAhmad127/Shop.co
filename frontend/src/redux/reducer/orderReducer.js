@@ -20,6 +20,9 @@ export const orderCreateReducer = (state = {}, { type, payload }) => {
         error: payload,
       };
 
+    case actionTypes.ORDER_CREATE_RESET:
+      return {};
+
     default:
       return state;
   }
@@ -47,6 +50,12 @@ export const orderDetailsReducer = (
       return {
         loading: false,
         error: payload,
+      };
+
+    case actionTypes.ORDER_DETAILS_RESET:
+      return {
+        orderItems: [],
+        shippingAddress: {},
       };
 
     default:
