@@ -31,6 +31,12 @@ export const cartReducer = (
         cartItems: state.cartItems.filter((x) => x.productId !== payload),
       };
 
+    case actionTypes.CART_RESET_ITEM:
+      return {
+        cartItems: [],
+        shippingAddress: {},
+      };
+
     case actionTypes.CART_SAVE_SHIPPING_ADDRESS:
       return {
         ...state,
