@@ -13,6 +13,8 @@ import Shipping from "./components/pages/Shipping";
 import Payment from "./components/pages/Payment";
 import PlaceOrder from "./components/pages/PlaceOrder";
 import Order from "./components/pages/Order";
+import UserList from "./components/pages/UserList";
+import UserEdit from "./components/pages/UserEdit";
 // import { Router } from "express";
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
         <Route path="/payment" Component={Payment} exact />
         <Route path="/placeorder" Component={PlaceOrder} exact />
         <Route path="/order/:id" Component={Order} exact />
+        <Route path="/admin/userlist" Component={UserList} exact />
+        <Route path="/admin/user/:id/edit" Component={UserEdit} exact />
       </Routes>
       <Footer />
     </Router>
