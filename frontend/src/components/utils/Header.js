@@ -4,10 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../../redux/action/userAction";
 
 const Header = () => {
-  const [menu, setMenu] = useState(false);
-  const userLogin = useSelector((state) => state.userLogin);
+  const [userMenu, setUserMenu] = useState(false);
+  const [adminMenu, setAdminMenu] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const signOutHandler = () => {
@@ -44,19 +45,19 @@ const Header = () => {
                 {userInfo ? (
                   <div className="relative inline-block text-left">
                     <div
-                      onClick={() => setMenu(!menu)}
-                      onMouseEnter={() => setMenu(true)}
-                      onMouseLeave={() => setMenu(false)}
+                      onClick={() => setUserMenu(!userMenu)}
+                      onMouseEnter={() => setUserMenu(true)}
+                      onMouseLeave={() => setUserMenu(false)}
                       className="hover:cursor-pointer"
                     >
                       <span className="text-sm font-bold py-2 ">
                         {userInfo.name}
                       </span>
                     </div>
-                    {menu && (
+                    {userMenu && (
                       <div
-                        onMouseEnter={() => setMenu(true)}
-                        onMouseLeave={() => setMenu(false)}
+                        onMouseEnter={() => setUserMenu(true)}
+                        onMouseLeave={() => setUserMenu(false)}
                         className="absolute right-0  mt-1 origin-top-right w-28 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                       >
                         <div className="py-1">
@@ -80,6 +81,48 @@ const Header = () => {
                   <Link to="/login">
                     <i className="fa-regular fa-circle-user w-[24px] h-[24px]"></i>
                   </Link>
+                )}
+              </span>
+              <span>
+                {userInfo && userInfo.isAdmin && (
+                  <div className="relative inline-block text-left">
+                    <div
+                      onClick={() => setAdminMenu(!adminMenu)}
+                      onMouseEnter={() => setAdminMenu(true)}
+                      onMouseLeave={() => setAdminMenu(false)}
+                      className="hover:cursor-pointer"
+                    >
+                      <span className="text-sm font-bold py-2 ">Admin</span>
+                    </div>
+                    {adminMenu && (
+                      <div
+                        onMouseEnter={() => setAdminMenu(true)}
+                        onMouseLeave={() => setAdminMenu(false)}
+                        className="absolute right-0  mt-1 origin-top-right w-28 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      >
+                        <div className="py-1">
+                          <Link
+                            to="/admin/userlist"
+                            className="text-gray-700 block px-4 py-2 text-sm"
+                          >
+                            Users
+                          </Link>
+                          <Link
+                            to="/admin/productlist"
+                            className="text-gray-700 block px-4 py-2 text-sm"
+                          >
+                            Products
+                          </Link>
+                          <Link
+                            to="/admin/orderslist"
+                            className="text-gray-700 block px-4 py-2 text-sm"
+                          >
+                            Orders
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
               </span>
             </div>
