@@ -7,13 +7,12 @@ const Product = require("./models/productModel");
 const products = require("./data/products");
 const Order = require("./models/orderModel");
 
-
 dotenv.config();
 connectDb();
 
 const importData = async () => {
   try {
-    const createdUsers = await User.insertMany(users);
+    const createdUsers = await User.find({});
     const adminUser = createdUsers[0]._id;
 
     const sampleProducts = products.map((products) => {
@@ -44,9 +43,8 @@ const deleteData = async () => {
   }
 };
 
-
-if (process.argv[2]==='-d') {
-    deleteData()
+if (process.argv[2] === "-d") {
+  deleteData();
 } else {
-    importData()
+  importData();
 }
