@@ -9,7 +9,7 @@ const UserEdit = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const [message, setMessage] = useState(null);
+  // const [message, setMessage] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -66,11 +66,11 @@ const UserEdit = () => {
               {error}
             </h1>
           )}
-          {message || (
+          {/* {message || (
             <h1 className="text-center bg-red-300 text-red-600 text-sm py-4 w-full">
               {message}
             </h1>
-          )}
+          )} */}
           <div className="flex flex-col gap-6">
             <h1 className="text-3xl font-medium">Edit User</h1>
             <p className="text-sm">Enter details below</p>

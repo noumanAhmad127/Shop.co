@@ -10,7 +10,7 @@ const ProductCards = ({ products }) => {
           <Link to={`/products/${products._id}`}>
             <img
               src={products.image}
-              className="w-[172px] h-[174px] rounded-[13.42px]"
+              className="w-[172px] h-[174px] rounded-[13.42px] bg-contain"
             ></img>
           </Link>
         </div>
