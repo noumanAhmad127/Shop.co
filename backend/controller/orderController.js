@@ -76,9 +76,15 @@ const getMyOrders = asyncHandler(async (req, res) => {
   res.status(201).json(orders);
 });
 
+const getOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate("user", "id name");
+  res.status(201).json(orders);
+});
+
 module.exports = {
   addOrderItems,
   getOrderById,
   updateOrderToPaid,
   getMyOrders,
+  getOrders,
 };
