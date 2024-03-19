@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listProduct } from "../../../redux/action/productAction";
+import {
+  createProduct,
+  deleteProduct,
+  listProduct,
+} from "../../../redux/action/productAction";
 import { ColorRing } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
+import { actionTypes } from "../../../redux/action/action-types";
 
 const ListProduct = () => {
   const dispatch = useDispatch();
@@ -11,20 +16,48 @@ const ListProduct = () => {
   const { loading, error, products } = productList;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    success: successDelete,
+    error: errorDelete,
+  } = productDelete;
+
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    success: successCreate,
+    error: errorCreate,
+    product: createdProduct,
+  } = productCreate;
 
   console.log(productList);
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    dispatch({ type: actionTypes.PRODUCT_CREATE_RESET });
+    if (!userInfo.isAdmin) {
+      navigate("/login");
+    }
+
+    if (successCreate) {
+      navigate(`/admin/product/${createdProduct._id}/edit`);
+    } else {
       dispatch(listProduct());
-    } else navigate("/login");
-  }, [dispatch, userInfo, navigate]);
+    }
+  }, [
+    dispatch,
+    userInfo,
+    navigate,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const createProductHandler = () => {
-    console.log("..");
+    dispatch(createProduct());
   };
   const deleteHandler = (id) => {
-    // dispatch(deleteUser(id));
+    dispatch(deleteProduct(id));
   };
 
   return (
@@ -32,18 +65,34 @@ const ListProduct = () => {
       <div className="flex flex-col gap-6 mx-4 my-6">
         <div className="flex flex-row justify-between ">
           <h1 className="text-2xl font-medium">Products</h1>
-          <button
-            onClick={createProductHandler}
-            className="text-lg text-white bg-black px-3 py-2 mx-2"
-          >
-            <i
-              className="fas fa-plus"
-              style={{ fontSize: "18px", marginRight: "8px" }}
-            ></i>
-            Create Product
-          </button>
+          {loadingCreate ? (
+            <button
+              className="text-lg text-white bg-black/80 px-3 py-2 mx-2"
+              disabled
+            >
+              <i
+                className="fa-solid fa-circle-notch fa-spin"
+                style={{ fontSize: "18px", marginRight: "8px" }}
+              ></i>
+              Create Product
+            </button>
+          ) : (
+            <button
+              onClick={createProductHandler}
+              className="text-lg text-white bg-black px-3 py-2 mx-2"
+            >
+              <i
+                className="fas fa-plus"
+                style={{ fontSize: "18px", marginRight: "8px" }}
+              ></i>
+              Create Product
+            </button>
+          )}
         </div>
         <div>
+          {errorCreate && <h1>{errorCreate}</h1>}
+          {errorDelete && <h1>{errorDelete}</h1>}
+
           {loading ? (
             <div className="items-center flex justify-center">
               <ColorRing
@@ -115,7 +164,11 @@ const ListProduct = () => {
                             deleteHandler(product._id);
                           }}
                         >
-                          <i className="fas fa-trash"></i>
+                          {loadingDelete ? (
+                            <i className="fa-solid fa-circle-notch fa-spin"></i>
+                          ) : (
+                            <i className="fas fa-trash"></i>
+                          )}
                         </button>
                       </td>
                     </tr>
