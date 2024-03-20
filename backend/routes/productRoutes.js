@@ -5,6 +5,7 @@ const {
   deleteProduct,
   updateProduct,
   createProduct,
+  createReview,
 } = require("../controller/productController");
 const { protect, admin } = require("../middleware/authMiddleware");
 const router = express.Router();
@@ -16,4 +17,5 @@ router
   .delete(protect, admin, deleteProduct)
   .put(protect, admin, updateProduct);
 
+router.route("/:id/reviews").post(protect, createReview);
 module.exports = router;
