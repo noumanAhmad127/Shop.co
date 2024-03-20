@@ -68,7 +68,10 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
+// export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
+
+export const paidOrder = (order) => async (dispatch, getState) => {
+  //modifies for just make work
   try {
     dispatch({
       type: actionTypes.ORDER_PAY_REQUEST,
@@ -80,14 +83,15 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
     const { data } = await axios.put(
-      `/api/orders/${id}/pay`,
-      paymentResult,
+      // `/api/orders/${id}/pay`,
+      `/api/orders/${order._id}/pay`,
+      // paymentResult,
+      {},
       config
     );
 
@@ -98,6 +102,43 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: actionTypes.ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deliverOrder = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: actionTypes.ORDER_DELIVER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/deliver`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: actionTypes.ORDER_DELIVER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionTypes.ORDER_DELIVER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
