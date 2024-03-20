@@ -1,32 +1,61 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getOrderDetails } from "../../../redux/action/orderAction";
+import {
+  deliverOrder,
+  getOrderDetails,
+  paidOrder,
+} from "../../../redux/action/orderAction";
 import { ColorRing } from "react-loader-spinner";
 // import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import { actionTypes } from "../../../redux/action/action-types";
 
 const Order = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, order, error } = orderDetails;
+
+  //just make for learning
+  const orderPay = useSelector((state) => state.orderPay);
+  const {
+    loading: loadingPay,
+    error: errorPay,
+    success: successPay,
+  } = orderPay;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const {
+    loading: loadingDeliver,
+    success: successDeliver,
+    error: errorDeliver,
+  } = orderDeliver;
   useEffect(() => {
     // const addStripeScript = async () => {
     //   const { data: clientId } = await axios.get("/api/config/stripe");
     //   console.log(clientId);
     //   addStripeScript();
     // };
-    if (!order || order._id !== id) {
+    if (!userInfo) {
+      navigate("/login");
+    }
+    if (!order || order._id !== id || successDeliver || successPay) {
+      dispatch({ type: actionTypes.ORDER_DELIVER_RESET });
+      dispatch({ type: actionTypes.ORDER_PAY_RESET });
       dispatch(getOrderDetails(id));
     }
-  }, [order, id]);
+  }, [order, id, successDeliver, successPay]);
 
   const payOrderHandler = async () => {
     // const stripe = await loadStripe(process.env.STRIPE_PUBLISHED_KEY);
-    order.isPaid = true;
+    dispatch(paidOrder(order));
   };
+
+  const deliverHandler = () => [dispatch(deliverOrder(order))];
 
   return loading ? (
     <div className="items-center flex justify-center">
@@ -160,19 +189,55 @@ const Order = () => {
                     <p className="text-[16px] font-bold">${order.totalPrice}</p>
                   </div>
                 </div>
-                <button
-                  className="text-white bg-black py-4 rounded-full w-full"
-                  onClick={payOrderHandler}
-                  disabled={order.orderItems.length === 0}
-                >
-                  Pay {order.totalPrice}
-                  <span>
-                    <i
-                      className="fa-solid fa-arrow-right-long"
-                      style={{ color: "white" }}
-                    ></i>
-                  </span>
-                </button>
+                {!order.isPaid && (
+                  <button
+                    className="text-white bg-black py-4 rounded-full w-full"
+                    onClick={payOrderHandler}
+                    disabled={order.orderItems.length === 0}
+                  >
+                    Pay {order.totalPrice}
+                    <span>
+                      {loadingDeliver ? (
+                        <i
+                          className="fa-solid fa-circle-notch fa-spin"
+                          style={{ fontSize: "18px", marginLeft: "8px" }}
+                        ></i>
+                      ) : (
+                        <i
+                          className="fa-solid fa-arrow-right-long"
+                          style={{
+                            color: "white",
+                            fontSize: "18px",
+                            marginLeft: "8px",
+                          }}
+                        ></i>
+                      )}
+                    </span>
+                  </button>
+                )}
+
+                {userInfo &&
+                  userInfo.isAdmin &&
+                  order.isPaid &&
+                  !order.isDelivered && (
+                    <button
+                      className="text-white bg-black py-4 rounded-full w-full"
+                      onClick={deliverHandler}
+                      disabled={order.orderItems.length === 0}
+                    >
+                      Deliver
+                      <span>
+                        {loadingDeliver ? (
+                          <i
+                            className="fa-solid fa-circle-notch fa-spin"
+                            style={{ fontSize: "18px", marginLeft: "8px" }}
+                          ></i>
+                        ) : (
+                          " "
+                        )}
+                      </span>
+                    </button>
+                  )}
               </div>
             </div>
           </div>
