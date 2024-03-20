@@ -70,10 +70,29 @@ const ListProduct = () => {
               className="text-lg text-white bg-black/80 px-3 py-2 mx-2"
               disabled
             >
+              {loadingCreate ? (
+            <button
+              className="text-lg text-white bg-black/80 px-3 py-2 mx-2"
+              disabled
+            >
               <i
                 className="fa-solid fa-circle-notch fa-spin"
                 style={{ fontSize: "18px", marginRight: "8px" }}
               ></i>
+              Create Product
+            </button>
+          ) : (
+            <button
+              onClick={createProductHandler}
+              className="text-lg text-white bg-black px-3 py-2 mx-2"
+            >
+              <i
+                className="fas fa-plus"
+                style={{ fontSize: "18px", marginRight: "8px" }}
+              ></i>
+              Create Product
+            </button>
+          )}
               Create Product
             </button>
           ) : (
