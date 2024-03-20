@@ -1,13 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createProduct,
-  deleteProduct,
-  listProduct,
-} from "../../../redux/action/productAction";
 import { ColorRing } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
-import { actionTypes } from "../../../redux/action/action-types";
+// import { actionTypes } from "../../../redux/action/action-types";
 import { listOrders } from "../../../redux/action/orderAction";
 
 const OrderList = () => {
@@ -22,7 +17,7 @@ const OrderList = () => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders());
     } else navigate("/login");
-  }, [dispatch, userInfo, navigate, success]);
+  }, [dispatch, userInfo, navigate]);
 
   return (
     <div>
@@ -72,45 +67,52 @@ const OrderList = () => {
                   </tr>
                 </thead>
 
-                {products.map((product) => (
+                {orders.map((order) => (
                   <tbody>
-                    <tr className="bg-white border-b" key={product._id}>
+                    <tr className="bg-white border-b" key={order._id}>
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                       >
-                        {product._id}
+                        {order._id}
                       </th>
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                       >
-                        {product.name}
+                        {order.user && order.user.name}
                       </th>
-                      <td className="px-6 py-4">${product.price}</td>
-                      <td className="px-6 py-4">{product.category}</td>
-                      <td className="px-6 py-4">{product.brand}</td>
                       <td className="px-6 py-4">
-                        <Link
-                          to={`/admin/product/${product._id}/edit `}
-                          className="underline"
-                        >
-                          <button className="mx-2">
-                            <i className="fas fa-edit"></i>
+                        {order.createdAt.substring(0, 10)}
+                      </td>
+                      <td className="px-6 py-4">${order.totalPrice}</td>
+                      <td className="px-6 py-4">
+                        {order.isPaid ? (
+                          order.paidAt.substring(0, 10)
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        {" "}
+                        {order.isDelivered ? (
+                          order.deliveredAt.substring(0, 10)
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <Link to={`/order/${order._id}`} className="underline">
+                          <button className="mx-2 bg-black text-white px-4 py-2 hover:bg-black/60">
+                            Details
                           </button>
                         </Link>
-                        <button
-                          className="mx-2"
-                          onClick={() => {
-                            deleteHandler(product._id);
-                          }}
-                        >
-                          {loadingDelete ? (
-                            <i className="fa-solid fa-circle-notch fa-spin"></i>
-                          ) : (
-                            <i className="fas fa-trash"></i>
-                          )}
-                        </button>
                       </td>
                     </tr>
                   </tbody>
