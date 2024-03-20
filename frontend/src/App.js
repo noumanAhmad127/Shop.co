@@ -17,6 +17,7 @@ import UserList from "./components/pages/Admin/UserList";
 import UserEdit from "./components/pages/Admin/UserEdit";
 import ListProduct from "./components/pages/Admin/ListProduct";
 import ProductEdit from "./components/pages/Admin/ProductEdit";
+import OrderList from "./components/pages/Admin/OrderList";
 // import { Router } from "express";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/admin/user/:id/edit" Component={UserEdit} exact />
         <Route path="/admin/productlist" Component={ListProduct} exact />
         <Route path="/admin/product/:id/edit" Component={ProductEdit} exact />
+        <Route path="/admin/orderslist" Component={OrderList} exact />
       </Routes>
       <Footer />
     </Router>
