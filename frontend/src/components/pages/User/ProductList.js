@@ -35,7 +35,7 @@ const ProductList = () => {
       ) : (
         <div className="flex flex-row flex-wrap gap-[10px] gap-y-[28px] justify-center">
           {products.map((products) => (
-            <div>
+            <div key={productList._id}>
               <ProductCards products={products} />
             </div>
           ))}
