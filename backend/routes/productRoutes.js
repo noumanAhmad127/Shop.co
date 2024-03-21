@@ -12,10 +12,10 @@ const router = express.Router();
 
 router.route("/").get(getProduct).post(protect, admin, createProduct);
 router
-  .route("/:id")
-  .get(getProductById)
-  .delete(protect, admin, deleteProduct)
-  .put(protect, admin, updateProduct);
+.route("/:id")
+.get(getProductById)
+.delete(protect, admin, deleteProduct)
+.put(protect, admin, updateProduct);
 
 router.route("/:id/reviews").post(protect, createReview);
 module.exports = router;
