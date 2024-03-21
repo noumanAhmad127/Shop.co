@@ -1,20 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Rating from "../../../utils/Rating";
 import { useDispatch, useSelector } from "react-redux";
-import { detailProduct } from "../../../../redux/action/productAction";
+import {
+  createReviewProduct,
+  detailProduct,
+} from "../../../../redux/action/productAction";
 import { ColorRing } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { actionTypes } from "../../../../redux/action/action-types";
 
 const ProductDetail = ({ id }) => {
-  const dispatch = useDispatch();
   const productDetail = useSelector((state) => state.productDetail);
   const { loading, error, product } = productDetail;
-  const [qty, setQty] = useState(0);
+
+  const productCreateReview = useSelector((state) => state.productCreateReview);
+  const {
+    loading: loadingReview,
+    error: errorReview,
+    success: successReview,
+  } = productCreateReview;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    if (successReview) {
+      alert("Review Submitted");
+      setRating(0);
+      setComment("");
+      dispatch({ type: actionTypes.PRODUCT_CREATE_REVIEW_RESET });
+    }
     dispatch(detailProduct(id));
-  }, [dispatch]);
+  }, [dispatch, id, successReview]);
   console.log(product);
 
   const decreamentHandler = () => {
@@ -27,6 +51,16 @@ const ProductDetail = ({ id }) => {
 
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createReviewProduct(id, {
+        rating,
+        comment,
+      })
+    );
   };
 
   return (
@@ -105,6 +139,113 @@ const ProductDetail = ({ id }) => {
                   Add to Cart
                 </button>
               </div>
+            </div>
+          </div>
+          <hr className="border-[1px] my-6" />
+          <div className="flex flex-col gap-5">
+            <div>
+              <h1 className="text-lg text-semibold">
+                All Reviews{" "}
+                <span className="text-slate-400 text-sm">
+                  ({product.numReviews})
+                </span>
+              </h1>
+            </div>
+            <div>
+              {product.review.length === 0 && (
+                <h1 className="py-2 px-3 text-normal font-semibold bg-blue-200 text-blue-300">
+                  No Reviews
+                </h1>
+              )}
+              <div className="flex flex-col gap-3 my-2 w-full">
+                <h1 className="text-base text-black font-semibold">
+                  Write a Customer Review
+                </h1>
+                {errorReview && (
+                  <h1 className="px-2 py-1 bg-red-300 text-red-500 text-sm w-full">
+                    {errorReview.message}
+                  </h1>
+                )}
+                {product.review.user === userInfo._id &&
+                  alert("Already Reviewed")}
+                {!userInfo && (
+                  <h1 className="text-sm text-slate-400">
+                    Please <Link to="/login">Login</Link> to write a review
+                  </h1>
+                )}
+                <form onSubmit={submitHandler} className="flex flex-col gap-2">
+                  <div className="flex flex-row gap-2 items-center">
+                    <label className="text-sm font-semibold">Rating: </label>
+                    <select
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                      className=" px-2 py-1 text-sm  border-[1px] bolder-black/5 "
+                    >
+                      <option value="">Select</option>
+                      <option value="1">&#9733;</option>
+                      <option value="2">&#9733;&#9733;</option>
+                      <option value="3">&#9733;&#9733;&#9733;</option>
+                      <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                      <option value="5">
+                        &#9733;&#9733;&#9733;&#9733;&#9733;
+                      </option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col gap-2 w-full">
+                    <label className="text-sm font-semibold">
+                      Write Comment
+                    </label>
+                    <textarea
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      className="border-[1px] border-black/5 px-1 py-1"
+                    ></textarea>
+                  </div>
+                  {loadingReview ? (
+                    <button
+                      disabled
+                      className="px-4 py-3 bg-black text-white self-start rounded-[62px]"
+                    >
+                      {" "}
+                      <i
+                        className="fa-solid fa-circle-notch fa-spin"
+                        style={{ fontSize: "18px", marginRight: "8px" }}
+                      ></i>{" "}
+                      Comment
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="px-4 py-3 bg-black text-white self-start rounded-[62px]"
+                    >
+                      {" "}
+                      Comment
+                    </button>
+                  )}
+                </form>
+              </div>
+
+              {product.review.map((review) => (
+                <div
+                  key={review._id}
+                  className="rounded-[20px] border-[1px] border-black/5 my-3"
+                >
+                  <div className="p-6 flex flex-col gap-3">
+                    <div>
+                      <Rating value={review.rating} />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <h1 className="text-base font-semibold">{review.name}</h1>
+                      <p className="text-sm text-slate-600">
+                        "{review.comment}"
+                      </p>
+                      <p className="text-sm text-slate-600 font-semibold my-2">
+                        Posted on {review.createdAt.substring(0, 10)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <hr className="border-[1px] my-6" />
