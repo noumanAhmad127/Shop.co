@@ -18,6 +18,7 @@ import UserEdit from "./components/pages/Admin/UserEdit";
 import ListProduct from "./components/pages/Admin/ListProduct";
 import ProductEdit from "./components/pages/Admin/ProductEdit";
 import OrderList from "./components/pages/Admin/OrderList";
+import SearchBox from "./components/utils/SearchBox";
 // import { Router } from "express";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" Component={Homepage} exact />
+        <Route path="/search/:keyword" Component={SearchBox} exact />
         <Route path="/login" Component={Login} exact />
         <Route path="/signup" Component={SignUp} exact />
         <Route path="/profile" Component={Profile} exact />

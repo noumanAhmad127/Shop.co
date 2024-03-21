@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../../redux/action/userAction";
+import SearchBox from "./SearchBox";
 
 const Header = () => {
   const [userMenu, setUserMenu] = useState(false);
@@ -15,6 +16,16 @@ const Header = () => {
     dispatch(logOut());
     navigate("/");
   };
+
+  const handleSearch = () => {
+    var x = document.getElementById("search");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  };
+
   return (
     <div>
       <div className="w-[90%] mx-auto py-5">
@@ -34,8 +45,14 @@ const Header = () => {
           <div>
             <div className="flex gap-3">
               <span className="">
-                <i className="fa-solid fa-magnifying-glass w-[24px] h-[24px]"></i>
+                <i
+                  className="fa-solid fa-magnifying-glass w-[24px] h-[24px]"
+                  onClick={handleSearch}
+                ></i>
               </span>
+              <div className="absolute top-[70px] right-7" id="search">
+                <SearchBox />
+              </div>
               <span>
                 <Link to="/cart">
                   <i className="fa-solid fa-cart-shopping w-[24px] h-[24px]"></i>
