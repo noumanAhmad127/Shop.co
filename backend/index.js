@@ -1,6 +1,7 @@
 const path = require("path");
 const morgan = require("morgan");
 const express = require("express");
+// const cors = require("cors");
 const dontenv = require("dotenv");
 const connectDb = require("./config/db");
 const productRoutes = require("./routes/productRoutes");
@@ -12,6 +13,7 @@ const UploadRoutes = require("./routes/uploadRoutes");
 dontenv.config();
 connectDb();
 const app = express();
+// app.use(cors());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
