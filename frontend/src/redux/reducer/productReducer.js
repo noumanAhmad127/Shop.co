@@ -21,11 +21,13 @@ export const productDetailReducer = (
 ) => {
   switch (type) {
     case actionTypes.PRODUCT_DETAIL_REQUEST:
-      return { loading: true, ...state };
+      return { loading: true };
     case actionTypes.PRODUCT_DETAIL_SUCCESS:
       return { loading: false, product: payload };
     case actionTypes.PRODUCT_DETAIL_FAIL:
       return { loading: false, error: payload };
+    case actionTypes.PRODUCT_DETAIL_RESET:
+      return { loading: false, state: {} };
     default:
       return state;
   }
@@ -67,8 +69,8 @@ export const productReviewCreateReducer = (state = {}, { type, payload }) => {
       return { loading: false, success: true };
     case actionTypes.PRODUCT_CREATE_REVIEW_FAIL:
       return { loading: false, error: payload };
-    // case actionTypes.PRODUCT_CREATE_REVIEW_RESET:
-    //   return {};
+    case actionTypes.PRODUCT_CREATE_REVIEW_RESET:
+      return {};
     default:
       return state;
   }
