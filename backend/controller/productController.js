@@ -84,8 +84,9 @@ const updateProduct = asyncHandler(async (req, res) => {
 });
 
 const createReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
   const product = await Product.findById(req.params.id);
+  const { rating, comment } = req.body;
+
   if (product) {
     const alreadyReviewed = product.review.find(
       (r) => r.user.toString() === req.user._id.toString()
@@ -98,10 +99,11 @@ const createReview = asyncHandler(async (req, res) => {
 
     const reviews = {
       name: req.user.name,
-      rating: Number(rating) || 0,
+      rating: Number(rating),
       comment,
       user: req.user._id,
     };
+
     product.review.push(reviews);
 
     product.numReviews = product.review.length;
@@ -111,7 +113,8 @@ const createReview = asyncHandler(async (req, res) => {
     );
     product.rating = totalRating / product.review.length;
     await product.save();
-    res.status(100).json({ message: " Review Added" });
+
+    res.status(200).json({ message: "Review Added" });
   } else {
     res.status(400).json({ message: " Product not found" });
     throw new Error("Product not found");
