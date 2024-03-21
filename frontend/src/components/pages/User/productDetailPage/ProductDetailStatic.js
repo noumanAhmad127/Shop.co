@@ -1,13 +1,15 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import ProductCards from "../../../utils/Cards/ProductCards";
 import ProductDetail from "./ProductDetail";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ProductDetailStatic = () => {
-  const { id } = useParams();
+  const productCreateReview = useSelector((state) => state.productCreateReview);
+  const { success: successReview } = productCreateReview;
 
-  const [products, setProducts] = useState([]);
+  const { id } = useParams();
 
   const fetchProducts = async () => {
     const { data } = await axios.get(`/api/products`);
@@ -16,7 +18,13 @@ const ProductDetailStatic = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [id, successReview]);
+
+  const [products, setProducts] = useState([]);
+  // const fetchProducts = async () => {
+  //   const { data } = await axios.get(`/api/products`);
+  //   setProducts(data);
+  // };
 
   return (
     <>
@@ -27,7 +35,7 @@ const ProductDetailStatic = () => {
             You might also Like This
           </h1>
         </div>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-3">
           {[...products]
             .sort(() => 0.5 - Math.random())
             .slice(0, 2)
