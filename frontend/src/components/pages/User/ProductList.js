@@ -3,8 +3,10 @@ import ProductCards from "../../utils/Cards/ProductCards";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../../redux/action/productAction";
 import { ColorRing } from "react-loader-spinner";
+import { useParams } from "react-router-dom";
 
 const ProductList = () => {
+  const keyword = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -12,13 +14,13 @@ const ProductList = () => {
   console.log(productList);
 
   useEffect(() => {
-    dispatch(listProduct());
+    dispatch(listProduct(keyword));
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col mx-4 gap-8">
+    <div className="flex flex-col mx-4 gap-8 xl:w-[85%] xl:mx-auto xl:py-[72px]">
       <div>
-        <h1 className="text-2xl font-bold">Products</h1>
+        <h1 className="text-2xl font-bold xl:text-3xl">Products</h1>
       </div>
       {loading ? (
         <div className="items-center flex justify-center">
