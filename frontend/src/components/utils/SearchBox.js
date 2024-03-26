@@ -18,16 +18,13 @@ const SearchBox = () => {
     <form onSubmit={submitHandler} className="flex flex-row">
       <input
         type="text"
-        placeholder="Enter Keyword"
+        placeholder="Search for product"
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
-        className="w-64 px-2 py-3 rounded-md border-[1px] border-black"
+        className="w-64 px-2 py-1 rounded-[62px] border-[1px] bg-[#F0F0F0] text-black/40 xl:w-full xl:h-[48px] xl:px-8"
       ></input>
-      <button
-        type="submit"
-        className="px-3 py-4 text-black  border-[1px] border-black rounded-lg hover:text-white hover:bg-black"
-      >
-        Search
+      <button type="submit" className="">
+        <i className="fa-solid fa-magnifying-glass w-[24px] h-[24px]"></i>
       </button>
     </form>
   );
