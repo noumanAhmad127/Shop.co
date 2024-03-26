@@ -38,7 +38,7 @@ const SignUp = () => {
     dispatch(signOut(name, email, password));
   };
   return (
-    <div className="flex flex-col justify-center mx-6 my-6">
+    <div className="flex flex-col justify-center mx-6 my-6 max-w-2xl md:mx-auto">
       <div className="hidden"></div>
       <div className="flex flex-col gap-10">
         <div>
