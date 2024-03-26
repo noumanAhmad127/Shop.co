@@ -28,22 +28,24 @@ const ProductDetailStatic = () => {
 
   return (
     <>
-      <ProductDetail id={id} />
-      <div className="flex flex-col gap-14 mx-4">
-        <div>
-          <h1 className="text-2xl font-bold text-center">
-            You might also Like This
-          </h1>
-        </div>
-        <div className="flex flex-row gap-3">
-          {[...products]
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 2)
-            .map((products) => (
-              <div key={products._id}>
-                <ProductCards products={products} />
-              </div>
-            ))}
+      <div className="xl:w-[85%] xl:mx-auto xl:py-20">
+        <ProductDetail id={id} />
+        <div className="flex flex-col gap-14 mx-4">
+          <div>
+            <h1 className="text-2xl font-bold items-center xl:text-3xl">
+              You might also Like This
+            </h1>
+          </div>
+          <div className="flex flex-row gap-3 overflow-scroll">
+            {[...products]
+              .sort(() => 0.5 - Math.random())
+              .slice(0, 4)
+              .map((products) => (
+                <div key={products._id}>
+                  <ProductCards products={products} />
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </>
