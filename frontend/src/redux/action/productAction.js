@@ -2,25 +2,27 @@ import axios from "axios";
 import { actionTypes } from "./action-types";
 // import actionTypes from "./action-types"
 
-export const listProduct = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: actionTypes.PRODUCT_LIST_REQUEST,
-    });
+export const listProduct =
+  (keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: actionTypes.PRODUCT_LIST_REQUEST,
+      });
 
-    const { data } = await axios.get("/api/products");
+      const { data } = await axios.get(`/api/products?keyword=${keyword}`);
 
-    dispatch({
-      type: actionTypes.PRODUCT_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.PRODUCT_LIST_FAIL,
-      payload: error,
-    });
-  }
-};
+      dispatch({
+        type: actionTypes.PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.PRODUCT_LIST_FAIL,
+        payload: error,
+      });
+    }
+  };
 
 export const detailProduct = (id) => async (dispatch) => {
   try {
