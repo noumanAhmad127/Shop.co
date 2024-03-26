@@ -58,7 +58,7 @@ const Order = () => {
   const deliverHandler = () => [dispatch(deliverOrder(order))];
 
   return loading ? (
-    <div className="items-center flex justify-center">
+    <div className="items-center flex justify-center ">
       <ColorRing
         visible={true}
         height="80"
@@ -73,7 +73,7 @@ const Order = () => {
     <h1>{error}</h1>
   ) : (
     <>
-      <div>
+      <div className="max-w-3xl mx-auto xl:my-10">
         <div className="flex flex-col gap-4 mx-4">
           <h1 className="text-xl font-bold">Order: {order._id}</h1>
           <div className="flex flex-col gap-4">
