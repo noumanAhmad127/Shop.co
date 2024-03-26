@@ -47,7 +47,7 @@ const PlaceOrder = () => {
       <div className="my-6">
         <CheckOutSteps step1 step2 step3 step4 />
       </div>
-      <div>
+      <div className="max-w-3xl mx-auto">
         <div className="flex flex-col gap-4 mx-4">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
