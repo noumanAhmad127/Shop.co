@@ -52,8 +52,8 @@ const Profile = () => {
     }
   };
   return (
-    <div className="flex flex-col justify-between mx-6 my-6 gap-5">
-      <div className="flex flex-col gap-10">
+    <div className="flex flex-col justify-between mx-6 my-6 gap-5 xl:flex-row">
+      <div className="flex flex-col gap-10 xl:basis-[30%]">
         {loading && (
           <div className="items-center flex justify-center">
             <ColorRing
@@ -141,8 +141,8 @@ const Profile = () => {
           </form>
         </div>
       </div>
-      <hr className="w-full my-4" />
-      <div className="flex flex-col gap-4">
+      {/* <hr className="w-full my-4" /> */}
+      <div className="flex flex-col gap-4 xl:basis-[70%]">
         <div>
           <h1 className="text-3xl font-medium">My Orders</h1>
         </div>
