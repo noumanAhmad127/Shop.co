@@ -4,7 +4,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 const CheckOutSteps = ({ step1, step2, step3, step4 }) => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="max-w-3xl mx-auto">
       <div className="flex flex-row justify-evenly">
         <div>
           {step1 ? (
