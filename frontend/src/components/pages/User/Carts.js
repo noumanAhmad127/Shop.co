@@ -60,8 +60,11 @@ const Carts = () => {
           <div className="border-[1px] border-black/[60%] rounded-[20px] xl:basis-[60%]">
             {cartItems.map((item) => (
               <div className="flex flex-row px-3 py-3 gap-3">
-                <div className="basis-1/3">
-                  <img src={item.image}></img>
+                <div className="basis-1/3 xl:w-min">
+                  <img
+                    src={item.image}
+                    className=" h-36 w-full xl:h-28"
+                  ></img>
                 </div>
                 <div className="basis-2/3 flex flex-col gap-4">
                   <div className="flex flex-row justify-between gap-2">
