@@ -61,7 +61,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   const createdProduct = await product.save();
   if (createdProduct) {
-    res.status(201).json(createdProduct);
+    res.status(200).json(createdProduct);
   } else {
     res.status(400).json({ message: "Product Can't Created" });
     throw new Error("Product Can't Created");
