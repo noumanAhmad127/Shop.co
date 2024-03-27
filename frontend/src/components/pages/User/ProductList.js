@@ -18,7 +18,7 @@ const ProductList = () => {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col mx-4 gap-8 xl:w-[85%] xl:mx-auto xl:py-[72px]">
+    <div className="flex flex-col mx-4 gap-8 xl:w-[90%] xl:mx-auto xl:py-[72px]">
       <div>
         <h1 className="text-2xl font-bold xl:text-3xl">Products</h1>
       </div>
