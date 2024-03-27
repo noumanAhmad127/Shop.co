@@ -15,16 +15,20 @@ const Payment = () => {
     navigate("/shipping");
   }
 
-  const [paymentMethod, setPaymentMethod] = useState("Stripe");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const sumbitHandler = (e) => {
     e.preventDefault();
-    dispatch(savePaymentMethod(paymentMethod));
-    navigate("/placeorder");
+    if (paymentMethod == "") {
+      alert("Select Payment Method");
+    } else {
+      dispatch(savePaymentMethod(paymentMethod));
+      navigate("/placeorder");
+    }
   };
   return (
     <>
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto my-10">
         <CheckOutSteps step1 step2 step3 />
         <div className="flex flex-col justify-center mx-6 my-6">
           <div className="flex flex-col gap-6">
