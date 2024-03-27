@@ -80,15 +80,15 @@ const ProductDetail = ({ id }) => {
       ) : (
         <>
           <div className="flex flex-col gap-9 ">
-            <div className="flex flex-col gap-9 xl:flex-row">
-              <div className="xl:basis-1/2">
+            <div className="flex flex-col gap-9 xl:flex-row xl:justify-center">
+              <div className="xl:basis-[40%]">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="rounded-[20px]"
+                  className="rounded-[20px] w-full xl:h-[580px]"
                 />
               </div>
-              <div className="flex flex-col gap-4 xl:basis-1/2">
+              <div className="flex flex-col gap-4 xl:basis-[40%]">
                 <h1 className="text-2xl font-bold xl:text-4xl">
                   {product.name}
                 </h1>
