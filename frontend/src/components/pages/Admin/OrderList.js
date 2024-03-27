@@ -20,8 +20,8 @@ const OrderList = () => {
   }, [dispatch, userInfo, navigate]);
 
   return (
-    <div>
-      <div className="flex flex-col gap-6 mx-4 my-6">
+    <div className="xl:w-[85%] xl:mx-auto">
+      <div className="flex flex-col gap-6 mx-4 my-10">
         <div className="flex flex-row justify-between ">
           <h1 className="text-2xl font-medium">Orders</h1>
         </div>
