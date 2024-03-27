@@ -26,6 +26,8 @@ const ProductEdit = () => {
 
   const productDetail = useSelector((state) => state.productDetail);
   const { loading, error, product } = productDetail;
+  console.log(product);
+  console.log(id);
 
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
@@ -52,7 +54,7 @@ const ProductEdit = () => {
         setDescription(product.description);
       }
     }
-  }, [dispatch, id, product, navigate, successUpdate]);
+  }, [dispatch, id, navigate, successUpdate]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -92,7 +94,7 @@ const ProductEdit = () => {
     );
   };
   return (
-    <div className="flex flex-col justify-center mx-6 my-6">
+    <div className="flex flex-col justify-center mx-6 my-10 max-w-3xl xl:mx-auto">
       <div className="flex flex-col gap-10">
         <div>
           {loadingUpdate && (
