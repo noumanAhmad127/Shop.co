@@ -59,6 +59,8 @@ export const logOut = () => async (dispatch) => {
   dispatch({
     type: actionTypes.ORDER_CREATE_RESET,
   });
+  localStorage.removeItem("paymentMethod");
+  localStorage.removeItem("shippingAddress");
 };
 
 export const signOut = (name, email, password) => async (dispatch) => {
