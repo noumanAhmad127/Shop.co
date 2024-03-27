@@ -34,7 +34,7 @@ const ListProduct = () => {
   console.log(productList);
 
   useEffect(() => {
-    dispatch({ type: actionTypes.PRODUCT_CREATE_RESET });
+    // dispatch({ type: actionTypes.PRODUCT_CREATE_RESET });
     if (!userInfo.isAdmin) {
       navigate("/login");
     }
@@ -61,16 +61,11 @@ const ListProduct = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col gap-6 mx-4 my-6">
+    <div className="xl:w-[85%] xl:mx-auto ">
+      <div className="flex flex-col gap-6 mx-4 my-10 ">
         <div className="flex flex-row justify-between ">
           <h1 className="text-2xl font-medium">Products</h1>
           {loadingCreate ? (
-            <button
-              className="text-lg text-white bg-black/80 px-3 py-2 mx-2"
-              disabled
-            >
-              {loadingCreate ? (
             <button
               className="text-lg text-white bg-black/80 px-3 py-2 mx-2"
               disabled
@@ -79,20 +74,6 @@ const ListProduct = () => {
                 className="fa-solid fa-circle-notch fa-spin"
                 style={{ fontSize: "18px", marginRight: "8px" }}
               ></i>
-              Create Product
-            </button>
-          ) : (
-            <button
-              onClick={createProductHandler}
-              className="text-lg text-white bg-black px-3 py-2 mx-2"
-            >
-              <i
-                className="fas fa-plus"
-                style={{ fontSize: "18px", marginRight: "8px" }}
-              ></i>
-              Create Product
-            </button>
-          )}
               Create Product
             </button>
           ) : (
