@@ -28,9 +28,14 @@ const Shipping = () => {
 
   const sumbitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ country, city, address, postalCode }));
-    navigate("/payment");
+    if (address === "" && city === "" && postalCode === "" && country === "") {
+      alert("Fields Empty");
+    } else {
+      dispatch(saveShippingAddress({ country, city, address, postalCode }));
+      navigate("/payment");
+    }
   };
+
   return (
     <>
       <div className="my-5 xl:my-10">
