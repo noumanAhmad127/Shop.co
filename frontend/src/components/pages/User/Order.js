@@ -53,6 +53,7 @@ const Order = () => {
   const payOrderHandler = async () => {
     // const stripe = await loadStripe(process.env.STRIPE_PUBLISHED_KEY);
     dispatch(paidOrder(order));
+    localStorage.removeItem("cartItems");
   };
 
   const deliverHandler = () => [dispatch(deliverOrder(order))];
