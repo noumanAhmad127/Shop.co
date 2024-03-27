@@ -24,8 +24,8 @@ const UserList = () => {
     dispatch(deleteUser(id));
   };
   return (
-    <div>
-      <div className="flex flex-col gap-6 mx-4 my-6">
+    <div className="xl:w-[85%] xl:mx-auto ">
+      <div className="flex flex-col gap-6 mx-4 my-10">
         <div>
           <h1 className="text-3xl font-medium">Users</h1>
         </div>
