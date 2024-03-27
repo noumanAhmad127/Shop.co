@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CheckOutSteps from "../../utils/CheckOutSteps";
 import { createOrder } from "../../../redux/action/orderAction";
+import { actionTypes } from "../../../redux/action/action-types";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const PlaceOrder = () => {
 
   useEffect(() => {
     if (success) {
+      dispatch({ type: actionTypes.CART_RESET_ITEM });
       navigate(`/order/${order._id}`);
     }
     //eslint-disable-next-line
